@@ -1,10 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-body {
-  font-family: sans-serif;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -19,7 +15,7 @@ html {
 
 h3 {
   font: normal 32px/1.5 "Open Sans", sans-serif;
-  color: #2c3e50;
+  color: #fff;
   margin: 50px 0;
   text-align: center;
 }
