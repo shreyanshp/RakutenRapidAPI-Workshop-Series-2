@@ -16,7 +16,7 @@ html {
 h3 {
   font: normal 32px/1.5 "Open Sans", sans-serif;
   color: #fff;
-  margin: 50px 0;
+  margin: 10px 0;
   text-align: center;
 }
 
@@ -112,11 +112,11 @@ h3 {
 }
 
 .app .controls a i {
-  font-size: 18px;
+  font-size: 64px;
 }
 
 .app .controls #take-photo i {
-  font-size: 32px;
+  font-size: 64px;
 }
 
 .app canvas {
@@ -143,11 +143,11 @@ h3 {
   }
 
   .app .controls a i {
-    font-size: 16px;
+    font-size: 64px;
   }
 
   .app .controls #take-photo i {
-    font-size: 24px;
+    font-size: 64px;
   }
 }
 
@@ -162,10 +162,10 @@ h3 {
   }
 
   .app .controls a i {
-    font-size: 12px;
+    font-size: 64px;
   }
 
   .app .controls #take-photo i {
-    font-size: 18px;
+    font-size: 64px;
   }
 }
