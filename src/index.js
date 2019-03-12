@@ -44,10 +44,19 @@ if (!navigator.getMedia) {
     },
     // Error Callback
     function(err) {
-      displayErrorMessage(
-        "There was an error with accessing the camera stream: " + err.name,
-        err
-      );
+      var helpurl = "https://support.google.com/chrome/answer/2693767";
+      var str = "NotAllowedError";
+      if(str.includes(err.name)){
+        displayErrorMessage(
+          "Please give us permission to access your camera, you can check this help link for Chrome: "+helpurl,
+          err
+        );
+      }else {
+        displayErrorMessage(
+          "There was an error with accessing the camera stream: " + err.name,
+          err
+        );
+      }
     }
   );
 }
