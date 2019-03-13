@@ -48,7 +48,7 @@ if (!navigator.getMedia) {
       var str = "NotAllowedError";
       if(str.includes(err.name)){
         displayErrorMessage(
-          "Please give us permission to access your camera, you can check this help link for Chrome: "+helpurl,
+          "<a href='"+helpurl+"'target='_blank'>Please give us permission to access your camera, you can check this help link for Chrome</a>",
           err
         );
       }else {
@@ -170,7 +170,7 @@ function displayErrorMessage(error_msg, error) {
     console.log(error);
   }
 
-  error_message.innerText = error_msg;
+  error_message.innerHTML = error_msg;
 
   hideUI();
   error_message.classList.add("visible");
