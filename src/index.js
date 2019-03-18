@@ -9,6 +9,7 @@ var video = document.querySelector("#camera-stream"),
   download_photo_btn = document.querySelector("#download-photo"),
   error_message = document.querySelector("#error-message"),
   api_request = document.querySelector("#api-photo"),
+  camera_change = document.querySelector("#change-camera"),
   hidden_canvas,
   byteCharacters,
   context;
@@ -77,6 +78,29 @@ api_request.addEventListener("click", function(e) {
   );
   xhr.setRequestHeader("X-RapidAPI-Key", "<Your-Secret-Key>");
   xhr.send(data);
+});
+
+camera_change.addEventListener("click", function(e){
+  // Hide image.
+  image.setAttribute("src", "");
+  image.classList.remove("visible");
+  // Disable delete and save buttons
+  delete_photo_btn.classList.add("disabled");
+  download_photo_btn.classList.add("disabled");
+  api_request.classList.add("disabled");
+  //stop current camera
+  video.srcObject.getVideoTracks()[0].stop();
+  //change camera
+  changeCamera(camera_change.title);
+  //update camera_change title to implement a toggle like feature
+  if(camera_change.title=='environment'){
+    camera_change.title='user';
+  }else{
+    camera_change.title='environment';
+  }
+  //start new camera
+  video.play();
+  showVideo();
 });
 
 function showVideo() {
