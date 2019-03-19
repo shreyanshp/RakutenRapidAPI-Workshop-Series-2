@@ -1,4 +1,3 @@
-import "./cam.css";
 // References to all the element we will need.
 var video = document.querySelector("#camera-stream"),
   image = document.querySelector("#snap"),
