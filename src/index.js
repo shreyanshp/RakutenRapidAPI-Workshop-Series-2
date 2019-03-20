@@ -63,23 +63,35 @@ delete_photo_btn.addEventListener("click", function(e) {
 });
 
 api_request.addEventListener("click", function(e) {
-  var xhr = new XMLHttpRequest();
-  var data = new FormData();
-  data.append("image", byteCharacters);
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == XMLHttpRequest.DONE) {
-      alert(xhr.responseText);
-    }
-  };
-  xhr.open(
-    "POST",
-    "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/analyze?visualfeatures=Categories%2CTags%2CColor%2CFaces%2CDescription"
-  );
-  xhr.setRequestHeader("X-RapidAPI-Key", "<Your-Secret-Key>");
-  xhr.send(data);
+  var computerVisionUrl =
+    "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/analyze?visualfeatures=Categories%2CTags%2CColor%2CFaces%2CDescription";
+  var ecommerceUrl =
+    "https://rakuten_webservice-rakuten-marketplace-product-search-v1.p.rapidapi.com/services/api/Product/Search/20170426?keyword=";
+  var mykey = "<your-key-here>";
+  var imageData = new FormData();
+  imageData.append("image", byteCharacters);
+  sendRequest(computerVisionUrl, "POST", imageData, mykey)
+    .then(function(category) {
+      console.log("Success! on first request");
+      console.log(JSON.parse(category.responseText).categories[0].name);
+      return sendRequest(
+        ecommerceUrl + JSON.parse(category.responseText).categories[0].name,
+        "POST",
+        "",
+        mykey
+      );
+    })
+    .then(function(product) {
+      console.log("Success! on second request");
+      console.log(JSON.parse(product.responseText).Items[0].Item.itemUrl);
+    })
+    .catch(function(error) {
+      console.log("Something went wrong", error);
+      alert(JSON.stringify(error));
+    });
 });
 
-camera_change.addEventListener("click", function(e){
+camera_change.addEventListener("click", function(e) {
   // Hide image.
   image.setAttribute("src", "");
   image.classList.remove("visible");
@@ -92,10 +104,10 @@ camera_change.addEventListener("click", function(e){
   //change camera
   changeCamera(camera_change.title);
   //update camera_change title to implement a toggle like feature
-  if(camera_change.title=='environment'){
-    camera_change.title='user';
-  }else{
-    camera_change.title='environment';
+  if (camera_change.title == "environment") {
+    camera_change.title = "user";
+  } else {
+    camera_change.title = "environment";
   }
   //start new camera
   video.play();
@@ -104,7 +116,6 @@ camera_change.addEventListener("click", function(e){
 
 function showVideo() {
   // Display the video stream and the controls.
-
   hideUI();
   video.classList.add("visible");
   controls.classList.add("visible");
@@ -182,6 +193,39 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   var blob = new Blob(byteArrays, { type: contentType });
   return blob;
 }
+
+var sendRequest = function(url, method, data, rakutenrapidapikey) {
+  // Create the XHR request
+  var request = new XMLHttpRequest();
+
+  // Return it as a Promise
+  return new Promise(function(resolve, reject) {
+    // Setup our listener to process compeleted requests
+    request.onreadystatechange = function() {
+      // Only run if the request is complete
+      if (request.readyState !== 4) return;
+
+      // Process the response
+      if (request.status >= 200 && request.status < 300) {
+        // If successful
+        resolve(request);
+      } else {
+        // If failed
+        reject({
+          status: request.status,
+          statusText: request.statusText
+        });
+      }
+    };
+
+    // Setup our HTTP request
+    request.open(method || "POST", url, true);
+
+    request.setRequestHeader("X-RapidAPI-Key", rakutenrapidapikey);
+    // Send the request
+    request.send(data);
+  });
+};
 
 function changeCamera(data) {
   navigator.getMedia =
