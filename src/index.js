@@ -69,15 +69,16 @@ api_request.addEventListener("click", function(e) {
     "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/analyze?visualfeatures=Categories%2CTags%2CColor%2CFaces%2CDescription";
   var ecommerceUrl =
     "https://rakuten_webservice-rakuten-marketplace-product-search-v1.p.rapidapi.com/services/api/Product/Search/20170426?keyword=";
-  var mykey = "<your-key-here>";
+  var mykey = "14478f483amshce21a80cf4fc7f8p1e1f28jsn1a007f1c3c58";
   var imageData = new FormData();
   imageData.append("image", byteCharacters);
   sendRequest(computerVisionUrl, "POST", imageData, mykey)
     .then(function(category) {
       console.log("Success! on first request");
-      console.log(JSON.parse(category.responseText).categories[0].name);
+      console.log(JSON.parse(category.responseText).tags[0].name);
+      category_result.innerHTML = "Keyword detected - " + JSON.parse(category.responseText).tags[0].name;
       return sendRequest(
-        ecommerceUrl + JSON.parse(category.responseText).categories[0].name,
+        ecommerceUrl + JSON.parse(category.responseText).tags[0].name,
         "GET",
         "",
         mykey
@@ -85,7 +86,8 @@ api_request.addEventListener("click", function(e) {
     })
     .then(function(product) {
       console.log("Success! on second request");
-      console.log(JSON.parse(product.responseText).Items[0].Item.itemUrl);
+      console.log(JSON.stringify(product));
+      productUrl_result.innerHTML = "Product on e-Commerce Website - " + JSON.stringify(product);
     })
     .catch(function(error) {
       console.log("Something went wrong", error);
