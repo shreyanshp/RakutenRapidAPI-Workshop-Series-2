@@ -20,6 +20,13 @@ h3 {
   text-align: center;
 }
 
+h6 {
+  font: normal 16px/1.5 "Open Sans", sans-serif;
+  color: #fff;
+  margin: 10px 0;
+  text-align: center;
+}
+
 .container {
   max-width: 1000px;
   margin: 50px auto;
