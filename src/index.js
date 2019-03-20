@@ -69,7 +69,7 @@ api_request.addEventListener("click", function(e) {
     "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/analyze?visualfeatures=Categories%2CTags%2CColor%2CFaces%2CDescription";
   var ecommerceUrl =
     "https://rakuten_webservice-rakuten-marketplace-product-search-v1.p.rapidapi.com/services/api/Product/Search/20170426?keyword=";
-  var mykey = "14478f483amshce21a80cf4fc7f8p1e1f28jsn1a007f1c3c58";
+  var mykey = "<Your-RakutenRapidAPI-key-here>";
   var imageData = new FormData();
   imageData.append("image", byteCharacters);
   sendRequest(computerVisionUrl, "POST", imageData, mykey)
