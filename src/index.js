@@ -9,6 +9,8 @@ var video = document.querySelector("#camera-stream"),
   error_message = document.querySelector("#error-message"),
   api_request = document.querySelector("#api-photo"),
   camera_change = document.querySelector("#change-camera"),
+  category_result = document.querySelector("#detected-category"),
+  productUrl_result = document.querySelector("#detected-producturl"),
   hidden_canvas,
   byteCharacters,
   context;
@@ -76,7 +78,7 @@ api_request.addEventListener("click", function(e) {
       console.log(JSON.parse(category.responseText).categories[0].name);
       return sendRequest(
         ecommerceUrl + JSON.parse(category.responseText).categories[0].name,
-        "POST",
+        "GET",
         "",
         mykey
       );
