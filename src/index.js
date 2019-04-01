@@ -4,17 +4,14 @@ var video = document.querySelector("#camera-stream"),
   start_camera = document.querySelector("#start-camera"),
   controls = document.querySelector(".controls"),
   take_photo_btn = document.querySelector("#take-photo"),
-  delete_photo_btn = document.querySelector("#delete-photo"),
-  download_photo_btn = document.querySelector("#download-photo"),
+  back_photo_btn = document.querySelector("#back-photo"),
   error_message = document.querySelector("#error-message"),
-  api_request = document.querySelector("#api-photo"),
   camera_change = document.querySelector("#change-camera"),
   category_result = document.querySelector("#detected-category"),
   productUrl_result = document.querySelector("#detected-producturl"),
   hidden_canvas,
   byteCharacters,
   context;
-
 //call camera
 changeCamera("environment");
 
@@ -38,33 +35,12 @@ take_photo_btn.addEventListener("click", function(e) {
   image.classList.add("visible");
 
   // Enable delete and save buttons
-  delete_photo_btn.classList.remove("disabled");
-  download_photo_btn.classList.remove("disabled");
-  api_request.classList.remove("disabled");
-  // Set the href attribute of the download button to the snap url.
-  download_photo_btn.href = snap;
+  back_photo_btn.classList.remove("disabled");
 
   // Pause video playback of stream.
   video.pause();
-});
 
-delete_photo_btn.addEventListener("click", function(e) {
-  e.preventDefault();
-
-  // Hide image.
-  image.setAttribute("src", "");
-  image.classList.remove("visible");
-
-  // Disable delete and save buttons
-  delete_photo_btn.classList.add("disabled");
-  download_photo_btn.classList.add("disabled");
-  api_request.classList.add("disabled");
-
-  // Resume playback of stream.
-  video.play();
-});
-
-api_request.addEventListener("click", function(e) {
+  //Start API request chain
   var computerVisionUrl =
     "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/analyze?visualfeatures=Categories%2CTags%2CColor%2CFaces%2CDescription";
   var ecommerceUrl =
@@ -103,14 +79,26 @@ api_request.addEventListener("click", function(e) {
     });
 });
 
+back_photo_btn.addEventListener("click", function(e) {
+  e.preventDefault();
+
+  // Hide image.
+  image.setAttribute("src", "");
+  image.classList.remove("visible");
+
+  // Disable delete and save buttons
+  back_photo_btn.classList.add("disabled");
+
+  // Resume playback of stream.
+  video.play();
+});
+
 camera_change.addEventListener("click", function(e) {
   // Hide image.
   image.setAttribute("src", "");
   image.classList.remove("visible");
   // Disable delete and save buttons
-  delete_photo_btn.classList.add("disabled");
-  download_photo_btn.classList.add("disabled");
-  api_request.classList.add("disabled");
+  back_photo_btn.classList.add("disabled");
   //stop current camera
   video.srcObject.getVideoTracks()[0].stop();
   //change camera
